@@ -34,7 +34,9 @@ const IssueForm = ({ issue }:{ issue?: Issue }) => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await axios.post("/api/issues", data);
+      issue
+        ? await axios.patch("/api/issues/" + issue.id, data)
+        : await axios.post("/api/issues", data);
       setIsSubmitting(true);
       router.push("/issues");
     } catch (error) {
@@ -68,7 +70,7 @@ const IssueForm = ({ issue }:{ issue?: Issue }) => {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button disabled={isSubmitting}>
-          Submit new issue {isSubmitting && <Spinner />}
+          {issue ? "Update issue" : "Submit new issue"} {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>
