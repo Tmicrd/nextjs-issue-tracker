@@ -15,7 +15,7 @@ import { z } from "zod";
 
 type IssueDataForm = z.infer<typeof issueSchema>; // IssueForm is based on issueSchema
 
-const IssueForm = ({ issue }:{ issue?: Issue }) => {
+const IssueForm = ({ issue }: { issue?: Issue }) => {
   const router = useRouter();
   const {
     register,
@@ -34,8 +34,8 @@ const IssueForm = ({ issue }:{ issue?: Issue }) => {
         ? await axios.patch("/api/issues/" + issue.id, data)
         : await axios.post("/api/issues", data);
       setIsSubmitting(true);
-      router.push("/issues");
-      router.refresh()
+      router.push("/issues/list");
+      router.refresh();
     } catch (error) {
       setIsSubmitting(false);
       setError("An unexpected error orrured.");
@@ -67,7 +67,8 @@ const IssueForm = ({ issue }:{ issue?: Issue }) => {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button disabled={isSubmitting}>
-          {issue ? "Update issue" : "Submit new issue"} {isSubmitting && <Spinner />}
+          {issue ? "Update issue" : "Submit new issue"}{" "}
+          {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>

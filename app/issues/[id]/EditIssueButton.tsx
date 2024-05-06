@@ -1,7 +1,7 @@
-import { Button } from '@radix-ui/themes';
-import Link from 'next/link';
+import { Button } from "@radix-ui/themes";
+import Link from "next/link";
 
-const EditIssueButton = ({ issueId }: { issueId: number}) => {
+const EditIssueButton = ({ issueId }: { issueId: number }) => {
   return (
     <Button>
       <svg
@@ -18,9 +18,9 @@ const EditIssueButton = ({ issueId }: { issueId: number}) => {
           clip-rule="evenodd"
         ></path>
       </svg>
-      <Link href={`/issues/${issueId}/edit`}>Edit Issue</Link>
+      <Link href={`/issues/edit/${issueId}`}>Edit Issue</Link>
     </Button>
   );
-}
+};
 
-export default EditIssueButton
+export default EditIssueButton;
