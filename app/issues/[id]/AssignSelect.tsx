@@ -1,22 +1,22 @@
 "use client"
 
+import axios from 'axios'
 import { User } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import Skeleton from "@/app/components/Skeleton"
 
 const AssignSelect = () => {
-  const [users, setUsers] = useState<User[]>([])
+  const { data: users, error, isLoading} = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () => axios.get("/api/users").then(res => res.data),
+    staleTime: 60 * 1000,
+    retry: 3
+  })
 
-  useEffect(() => {
-    const fetchUsers = async() => { 
-      const {data} = await axios.get<User[]>("/api/users")
-      setUsers(data)
-     }
+  if(isLoading) return <Skeleton />
 
-  fetchUsers()
-  }, [])
-  
+  if(error) return null
 
   return (
     <Select.Root>
